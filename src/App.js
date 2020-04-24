@@ -1,26 +1,51 @@
 import React from 'react';
-import logo from './logo.svg';
+import styled from 'styled-components';
+
+import SearchButton from './components/SearchButton'
+import TweetContainer from './components/TweetContainer'
+import TwitterLogo from './twitterlogo.png';
+import StockTwitLogo from './stocktwits.png';
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <ImgContainer>
+          <Image src={StockTwitLogo} alt="logo" />
+          <Image src={TwitterLogo} alt="logo" />
+        </ImgContainer>
       </header>
+      <Container>
+        <Input name='placeholder'/>
+        <SearchButton/>
+        <TweetContainer/>
+      </Container>
     </div>
   );
 }
+
+const ImgContainer = styled.div`
+  display: column;
+`
+
+const Image = styled.img`
+  width: 100px;
+  vertical-align: middle;
+`;
+
+const Input = styled.input`
+  width: 220px;
+  height: 35px;
+  border-radius: 4px;
+  border-style: groove;
+  justify-self: center;
+`;
+
+const Container = styled.div`
+  display: grid;
+  grid-gap: 10px;
+  justify-content: center;
+`;
 
 export default App;
