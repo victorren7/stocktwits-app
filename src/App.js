@@ -17,7 +17,6 @@ function App() {
         </ImgContainer>
       </header>
       <Container>
-        <Input name='placeholder'/>
         <SearchButton/>
         <TweetContainer/>
       </Container>
@@ -32,14 +31,6 @@ const ImgContainer = styled.div`
 const Image = styled.img`
   width: 100px;
   vertical-align: middle;
-`;
-
-const Input = styled.input`
-  width: 220px;
-  height: 35px;
-  border-radius: 4px;
-  border-style: groove;
-  justify-self: center;
 `;
 
 const Container = styled.div`
