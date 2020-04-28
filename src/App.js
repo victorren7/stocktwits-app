@@ -1,13 +1,36 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 
-import SearchButton from './components/SearchButton'
+import Search from './components/Search'
 import TweetContainer from './components/TweetContainer'
 import TwitterLogo from './twitterlogo.png';
 import StockTwitLogo from './stocktwits.png';
 import './App.css';
 
+import { buildBatchSearch, getTotalSymbols } from './helpers';
+import {omit} from 'lodash'
+
 function App() {
+  const [ searchInput, setSearchInput ] = useState(' ')
+  const [ totalSymbols, setTotalSymbols ] = useState({})
+
+  const handleSearch = (event) => {
+    console.log('searchInput1', searchInput)
+    event.preventDefault();
+    const request = buildBatchSearch(searchInput);
+  
+    Promise.all(request).then((data) => {
+      const updatedSymbols = getTotalSymbols(data);
+      setTotalSymbols({...totalSymbols, ...updatedSymbols})
+      setSearchInput('');
+    })
+  }
+
+  const clearSymbols = (id) => {
+    const updatedSymbols = omit(totalSymbols, id);
+    setTotalSymbols(updatedSymbols);
+  };
+
   return (
     <div>
       <header className="App-header">
@@ -17,8 +40,14 @@ function App() {
         </ImgContainer>
       </header>
       <Container>
-        <SearchButton/>
-        <TweetContainer/>
+        <Search
+          handleSearch={handleSearch}
+          setSearchInput={setSearchInput}
+          clearSymbols={clearSymbols}
+        />
+        <TweetContainer
+          totalSymbols={totalSymbols}
+        />
       </Container>
     </div>
   );
@@ -26,7 +55,7 @@ function App() {
 
 const ImgContainer = styled.div`
   display: column;
-`
+`;
 
 const Image = styled.img`
   width: 100px;
@@ -35,7 +64,7 @@ const Image = styled.img`
 
 const Container = styled.div`
   display: grid;
-  grid-gap: 10px;
+  grid-gap: 20px;
   justify-content: center;
 `;
 

@@ -1,16 +1,33 @@
-const lambdaPath = 'https://api.stocktwits.com/api/2/streams/symbols.json?access_token=5rJb331lk1mjGQMLn+VDjnNaEi1cfBxu+m4ONUeAK5VIdnCrxMrQOhBF9xvQlGIiZWAjjk4ba8RymQDV8eLIHQ=='
+import { filter } from 'lodash';
 
-export function buildBatchRequest() {
+const lambdaPath = 'https://api.stocktwits.com/api/2/streams/symbol'
+
+export function buildBatchSearch(searchInput) {
   const promises = [];
 
   // parse stock symbols from user input
-  const symbols = ['AAPL', 'TSLA'];
+  const symbols = searchInput.split(',').map((item) => item.trim());
+  console.log('aymbols', symbols);
+
+
   // structure the requests
   symbols.forEach((item) => {
     promises.push(
-      fetch(`${lambdaPath}?symbol=${item}`).then((res) => res.json()),
+      fetch(`${lambdaPath}/${item}.json`).then((res) => res.json()),
     );
   });
 
   return promises;
+}
+
+export const getList = function(data) {
+  return filter(data, (item) => item.symbol)
+};
+
+export const getTotalTweets = function(data) {
+  return getList(data).reduce((acc, o) => o.messages.length + acc, 0);
+};
+
+export const getTotalSymbols = function(data) {
+  return getList(data).reduce((o, item) => ({ ...o, [item.symbol.id]: item }), {})
 }

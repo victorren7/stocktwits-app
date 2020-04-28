@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const api = 'https://api.stocktwits.com/api/2/streams/symbols'
+const api = 'https://api.stocktwits.com/api/2/streams/symbol'
 const headers = {
   headers: {
     Accept: 'application/json'

@@ -13,7 +13,7 @@ const headers = {
 
 const axios = require('axios');
 exports.handler = (event, context, callback) => {
-  axios.get('https://api.stocktwits.com/api/2/streams/symbols/AAPL.json', headers)
+  axios.get('https://api.stocktwits.com/api/2/streams/symbol', headers)
     .then((res) => {
       callback(null, {
         statusCode: 200,

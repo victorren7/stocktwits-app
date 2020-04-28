@@ -1,25 +1,33 @@
 import React from 'react';
 import styled from 'styled-components';
-import {screenView} from '../ScreenView';
+import TweetCard from '../components/TweetCard'
 
-const TweetContainer = () => {
+const TweetContainer = ({ totalSymbols }) => {
+  console.log("totalSymbols2", totalSymbols);
+  const allSymbols = Object.entries(totalSymbols);
+  console.log("allSymbols", allSymbols.length);
+
   return (
     <Box>
-      <div>vudfbvliusfnvildsfhviufv</div>
+      {Object.entries(totalSymbols).map(([id, value]) => (
+        <div key={id}> 
+        {console.log(allSymbols, 'value')}
+          <Paragraph>total tweets found: {value.messages.length * allSymbols.length}</Paragraph>
+          <TweetCard data={value}/>
+        </div>
+      ))}
+
     </Box>
   );
 };
 
 const Box = styled.div`
-  min-height: 75vh;
-  min-width: 90vw;
-  border: 2px solid #C8C8C8;
-  border-radius: 4px;
-  text-align: center;
-  @media ${screenView.desktop} {
-    min-width: 75vw;
-
-  }
+  border-top: 2px solid;
 `;
+
+const Paragraph = styled.p`
+  text-align: center;
+  color: #77BFC7;
+`
 
 export default TweetContainer;
