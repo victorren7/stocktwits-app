@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import {Row} from '../global.css';
+import BeatLoader from 'react-spinners/BeatLoader'
 
-const Search = ({handleSearch, setSearchInput, clearSymbols}) => {
+const Search = ({handleSearch, setSearchInput, clearSymbols, isLoading}) => {
 
   const handleChange = (event) => {
     event.preventDefault();
@@ -11,8 +12,15 @@ const Search = ({handleSearch, setSearchInput, clearSymbols}) => {
 
   return (
     <Row>
-      <Input name='placeholder' onChange={handleChange}/>
+      <Input name='input' placeholder=' example: AAPL' onChange={handleChange}/>
       <Button type='button' onClick={handleSearch} setSearchInput={setSearchInput} clearSymbols={clearSymbols}>Search</Button>
+      {
+        isLoading ? 
+        <LoadingWrapper>
+          <BeatLoader/>
+        </LoadingWrapper> 
+        : null
+      }
     </Row>
 
   )
@@ -34,5 +42,9 @@ const Input = styled.input`
   border-style: groove;
   justify-self: center;
 `;
+
+const LoadingWrapper = styled.div`
+  text-align: center
+`
 
 export default Search;

@@ -1,22 +1,41 @@
 import React from 'react';
-import styled from 'styled-components';
-import TweetCard from '../components/TweetCard'
+import 'bootstrap/dist/css/bootstrap.css';
 
-const TweetContainer = ({ totalSymbols }) => {
-  console.log("totalSymbols2", totalSymbols);
-  const allSymbols = Object.entries(totalSymbols);
-  console.log("allSymbols", allSymbols.length);
+import styled from 'styled-components';
+import TweetCard from '../components/TweetCard';
+import ToggleContent from '../components/ToggleContent';
+import {getTotalTweets} from '../helpers';
+import { Row } from '../global.css'
+import Collapse from '@material-ui/core/Collapse';
+
+const TweetContainer = ({ 
+  totalSymbols, 
+  selectedSymbol, 
+  setSelectedSymbol,
+  handleToggle
+}) => {
+
+  const totalTweets = getTotalTweets(totalSymbols);
 
   return (
     <Box>
-      {Object.entries(totalSymbols).map(([id, value]) => (
-        <div key={id}> 
-        {console.log(allSymbols, 'value')}
-          <Paragraph>total tweets found: {value.messages.length * allSymbols.length}</Paragraph>
-          <TweetCard data={value}/>
-        </div>
-      ))}
-
+      <Paragraph>total tweets found: {totalTweets}</Paragraph>
+      <Row  gridGap={15}> 
+        {Object.entries(totalSymbols).map(([id, value]) => (
+          <ToggleContent 
+            key={id}
+            header={value.symbol.symbol} 
+            renderTweets={() => <TweetCard data={value}/>}
+            id={id}
+            value={value}
+            selectedSymbol={selectedSymbol}
+            setSelectedSymbol={setSelectedSymbol}
+            // onClick={() => handleToggle()}
+            
+            handleToggle={handleToggle}
+          />
+        ))}
+        </Row>
     </Box>
   );
 };

@@ -29,7 +29,6 @@ const TweetCard = ({ data }) => {
 
 const Wrapper = styled.div`
   display: grid;
-  // max-width: 85%;
   margin: 30px auto 30px;
   border-radius: 2px;
   grid-gap: 15px;
@@ -44,6 +43,8 @@ const StyledColumn = styled(Column)`
   padding: 20px;
   grid-template-columns: 50px 3fr;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+  background-color: #7395AE;
+  border-radius: 7px;
 `;
 
 const Icon = styled.img`

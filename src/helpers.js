@@ -7,9 +7,6 @@ export function buildBatchSearch(searchInput) {
 
   // parse stock symbols from user input
   const symbols = searchInput.split(',').map((item) => item.trim());
-  console.log('aymbols', symbols);
-
-
   // structure the requests
   symbols.forEach((item) => {
     promises.push(
@@ -17,8 +14,12 @@ export function buildBatchSearch(searchInput) {
     );
   });
 
+  // setInterval(function(){
+  //   buildBatchSearch(searchInput)
+  // }, 10000)
   return promises;
 }
+
 
 export const getList = function(data) {
   return filter(data, (item) => item.symbol)

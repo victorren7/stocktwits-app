@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 
 import Search from './components/Search'
@@ -8,27 +8,43 @@ import StockTwitLogo from './stocktwits.png';
 import './App.css';
 
 import { buildBatchSearch, getTotalSymbols } from './helpers';
-import {omit} from 'lodash'
+import {omit, flattenDeep} from 'lodash'
 
 function App() {
-  const [ searchInput, setSearchInput ] = useState(' ')
-  const [ totalSymbols, setTotalSymbols ] = useState({})
+  const [ searchInput, setSearchInput ] = useState('');
+  const [ totalSymbols, setTotalSymbols ] = useState({});
+  const [ isLoading, setIsLoading ] = useState(false);
+  const [ selectedSymbol, setSelectedSymbol ] = useState('');
+
 
   const handleSearch = (event) => {
-    console.log('searchInput1', searchInput)
     event.preventDefault();
+    setIsLoading(true)
     const request = buildBatchSearch(searchInput);
-  
     Promise.all(request).then((data) => {
       const updatedSymbols = getTotalSymbols(data);
-      setTotalSymbols({...totalSymbols, ...updatedSymbols})
+      const merged = {...totalSymbols, ...updatedSymbols}
+      setTotalSymbols(merged);
+      setIsLoading(false);
       setSearchInput('');
     })
+  }
+
+
+  const handleToggle = (id) => {
+    console.log('totalSymbols', totalSymbols)
+    console.log('clicked')
+    if (totalSymbols === id) {
+      setSelectedSymbol(id)
+    }
   }
 
   const clearSymbols = (id) => {
     const updatedSymbols = omit(totalSymbols, id);
     setTotalSymbols(updatedSymbols);
+    // if (selectedSymbol === id) {
+    //   setSelectedSymbol('');
+    // }
   };
 
   return (
@@ -44,9 +60,13 @@ function App() {
           handleSearch={handleSearch}
           setSearchInput={setSearchInput}
           clearSymbols={clearSymbols}
-        />
+          isLoading={isLoading}
+          />
         <TweetContainer
           totalSymbols={totalSymbols}
+          selectedSymbol={selectedSymbol}
+          setSelectedSymbol={setSelectedSymbol}
+          handleToggle={handleToggle}
         />
       </Container>
     </div>
