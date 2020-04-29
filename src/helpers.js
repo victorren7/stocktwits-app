@@ -17,6 +17,7 @@ export function buildBatchSearch(searchInput) {
   // setInterval(function(){
   //   buildBatchSearch(searchInput)
   // }, 10000)
+
   return promises;
 }
 
@@ -25,7 +26,7 @@ export const getList = function(data) {
   return filter(data, (item) => item.symbol)
 };
 
-export const getTotalTweets = function(data) {
+export const getTotalTweets = function(data, event) {
   return getList(data).reduce((acc, o) => o.messages.length + acc, 0);
 };
 
