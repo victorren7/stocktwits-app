@@ -7,40 +7,30 @@ import TweetContainer from './components/TweetContainer'
 import TwitterLogo from './assets/twitterlogo.png';
 import StockTwitLogo from './assets/stocktwits.png';
 import './App.css';
-import { buildBatchSearch, getTotalSymbols, BatchRefresh } from './helpers';
+import { buildBatchSearch, getTotalSymbols } from './helpers';
 
 function App() {
   const [ searchInput, setSearchInput ] = useState('');
   const [ totalSymbols, setTotalSymbols ] = useState({});
-  const [ isLoading, setIsLoading ] = useState(false);
   const [ selectedSymbol, setSelectedSymbol ] = useState('');
 
   const handleSearch = (event) => {
-    event.preventDefault();
-    setIsLoading(true)
+    event.persist();
     const request = (buildBatchSearch(searchInput));
     Promise.all(request).then((data) => {
       const updatedSymbols = getTotalSymbols(data);
-      const merged = {...totalSymbols, ...updatedSymbols}
-      const interval = setInterval(function() {
-        buildBatchSearch(searchInput)
-      }, 30000)
+      const merged = {...totalSymbols, ...updatedSymbols};
       setTotalSymbols(merged);
-      setIsLoading(false);
       setSearchInput('');
-      clearInterval(interval, 50000)
     })
+    searchRefresh(event)
+    clearInterval(searchRefresh, 20000)
   }
-  console.log('totalSymbols', totalSymbols)
-
-
-
-  useEffect(() => {
-    const interval = setInterval(function() {
-      buildBatchSearch(searchInput)
-    }, 30000)
-    return clearInterval(interval, 50000)
-  })
+  const searchRefresh = (event) => {
+    setInterval(function() {
+        handleSearch(event)
+      }, 30000)
+  }
 
   const clearSymbols = (id) => {
     const updatedSymbols = omit(totalSymbols, id);
@@ -61,7 +51,6 @@ function App() {
           handleSearch={handleSearch}
           setSearchInput={setSearchInput}
           clearSymbols={clearSymbols}
-          isLoading={isLoading}
           />
         <TweetContainer
           totalSymbols={totalSymbols}

@@ -13,39 +13,17 @@ export function buildBatchSearch(searchInput) {
         fetch(`${lambdaPath}/${item}.json`).then((res) => res.json()),
       );
     });
-
-  console.log('tweets',tweets)
   return tweets;
-}
-
-
-// symbols.forEach((item) => {
-//   tweets.unshift(
-//     fetch(`${lambdaPath}/${item}.json`).then(function(res) {
-//       const interval = setInterval(function() {
-//         console.log('search', item)
-//         buildBatchSearch(item)
-//       }, 30000)
-//       clearInterval(interval, 50000)
-//      return res.json()}),
-//   );
-// });
-
-export function BatchRefresh(searchInput) {
-  const interval = setInterval(() => {
-    buildBatchSearch(searchInput)
-  }, 10000)
-  clearInterval(interval, 20000)
-}
+};
 
 export const getList = function(data) {
   return filter(data, (item) => item.symbol)
 };
 
 export const getTotalTweets = function(data, event) {
-  return getList(data).reduce((acc, o) => o.messages.length + acc, 0);
+  return getList(data).reduce((acc, t) => t.messages.length + acc, 0);
 };
 
 export const getTotalSymbols = function(data) {
-  return getList(data).reduce((o, item) => ({ ...o, [item.symbol.id]: item }), {})
+  return getList(data).reduce((t, item) => ({ ...t, [item.symbol.id]: item }), {})
 }

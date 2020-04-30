@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import {Row} from '../global.css';
-import BeatLoader from 'react-spinners/BeatLoader'
 
 const Search = ({handleSearch, setSearchInput, clearSymbols, isLoading}) => {
 
@@ -27,13 +26,6 @@ const Search = ({handleSearch, setSearchInput, clearSymbols, isLoading}) => {
       >
         Search
       </Button>
-      {
-        isLoading ? 
-        <LoadingWrapper>
-          <BeatLoader/>
-        </LoadingWrapper> 
-        : null
-      }
     </Row>
     </Div>
   )
