@@ -1,49 +1,64 @@
-import React from 'react';
+import React, {useRef} from 'react';
 
 import styled from 'styled-components';
 import TweetCard from '../components/TweetCard';
-import {getTotalTweets} from '../helpers';
 import { Row } from '../global.css';
 import { screenView } from '../ScreenView';
 
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import Typography from '@material-ui/core/Typography';
+import { 
+  ExpansionPanel, 
+  ExpansionPanelSummary, 
+  ExpansionPanelDetails, 
+  Typography
+} from '@material-ui/core';
+
 
 const TweetContainer = ({ 
   totalSymbols, 
   selectedSymbol, 
   setSelectedSymbol,
+  clearSymbols
 }) => {
 
   const handleToggle = (panel) => (event, selectedSymbol) => {
     setSelectedSymbol(selectedSymbol ? panel : '');
-  }
+  };
 
-  const totalTweets = getTotalTweets(totalSymbols);
+  const refSymbol = useRef(<div/>);
 
   return (
     <Box>
-      <Paragraph>Total Tweets Found: {totalTweets}</Paragraph>
       <Row  gridGap={15}> 
         {Object.entries(totalSymbols).map(([id, value]) => (
+          <div key={id}>
+          <Paragraph>
+            Total Tweets for {value.symbol.symbol}: {value.messages.length}
+          </Paragraph>
           <Expansion
             expanded={selectedSymbol === id} 
             onChange={handleToggle(id)} 
-            key={id} 
-            ref={handleToggle}>
+            ref={refSymbol}
+          >
             <ExpansionPanelSummary 
               id={id}
-              expandIcon={<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"><path d="M12.44 6.44L9 9.88 5.56 6.44 4.5 7.5 9 12l4.5-4.5z"/></svg>}>
-              <Typography variant='h5' as='h5'>
+              
+              expandIcon={<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"><path d="M12.44 6.44L9 9.88 5.56 6.44 4.5 7.5 9 12l4.5-4.5z"/></svg>}
+            >
+              <Button type='button' onClick={() => clearSymbols(id)} > 
+                <Text variant='h5' as='h5'>
+                  X
+                </Text>
+              </Button>
+              <Text variant='h5' as='h5' margin>
                 {value.symbol.symbol}
-              </Typography>
+              </Text>
             </ExpansionPanelSummary>
-            <ExpansionPanelDetails ref={handleToggle}>
+            <hr/>
+            <ExpansionPanelDetails>
               <TweetCard data={value} />
             </ExpansionPanelDetails>
           </Expansion>
+          </div>
         ))}
         </Row>
     </Box>
@@ -51,7 +66,7 @@ const TweetContainer = ({
 };
 
 const Box = styled(Row)`
-  width: 100vw;
+  width: 90vw;
   justify-content: center;
 `;
 
@@ -67,6 +82,17 @@ const Expansion = styled(ExpansionPanel)`
 const Paragraph = styled.p`
   text-align: center;
   color: gainsboro;
+`;
+
+const Button = styled.button`
+  border: 0;
+  color: #DC143C;
+  background-color: transparent;
+`;
+
+const Text = styled(Typography)`
+  margin: ${props => props.margin ? 'auto' : 0};
+  font-weight: 300;
 `;
 
 export default TweetContainer;

@@ -1,12 +1,14 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import styled from 'styled-components';
 import { Column, Row } from '../global.css'
 import { screenView } from '../ScreenView';
 import moment from 'moment';
 
 const TweetCard = ({ data }) => {
+  const refSymbol = useRef(null);
+
   return (
-    <Wrapper>
+    <Wrapper ref={refSymbol}>
       {data.messages.map((tweet, index) => (
         <StyledColumn key={index} gridGap={20}>
           <Icon src={tweet.user.avatar_url_ssl}/>
@@ -35,9 +37,9 @@ const Wrapper = styled.div`
   @media ${screenView.desktop} { 
     max-width: 70%;
   }
-`;
-
-const StyledColumn = styled(Column)`
+  `;
+  
+  const StyledColumn = styled(Column)`
   width: 85%;
   margin: auto;
   padding: 20px;

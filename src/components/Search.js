@@ -43,7 +43,6 @@ const Div = styled.div`
   height: 130px;
   border-bottom: 1px solid rgb(204, 214, 221);
   padding: 10px 0 15px 0;
-  background-color: #7395AE;
 `;
 
 const Button = styled.button`
@@ -51,7 +50,7 @@ const Button = styled.button`
   height: 35px;
   border-radius: 4px;
   background-color: cornflowerblue;
-  font-weight: bolder;
+  font-weight: 300;
   justify-self: center;
   border-color: mediumblue;
   color: white;
