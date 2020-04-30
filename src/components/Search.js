@@ -56,8 +56,4 @@ const Input = styled.input`
   justify-self: center;
 `;
 
-const LoadingWrapper = styled.div`
-  text-align: center
-`
-
 export default Search;
