@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import {Row} from '../global.css';
 
-const Search = ({handleSearch, setSearchInput, clearSymbols, isLoading}) => {
+const Search = ({handleSearch, setSearchInput, clearSymbols}) => {
 
   const handleChange = (event) => {
     event.preventDefault();
