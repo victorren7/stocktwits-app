@@ -1,5 +1,5 @@
 {
-  "name": "stocktwit-app",
+  "name": "stocktwits-app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -17,9 +17,12 @@
     "react-scripts": "3.4.1",
     "react-spinners": "^0.8.1",
     "redux": "^4.0.5",
-    "styled-components": "^5.1.0"
+    "styled-components": "^5.1.0",
+    "homepage": "http://victorren7.github.io/stocktwits-app"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -41,5 +44,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^2.2.0"
   }
 }
