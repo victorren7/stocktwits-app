@@ -17,8 +17,7 @@
     "react-scripts": "3.4.1",
     "react-spinners": "^0.8.1",
     "redux": "^4.0.5",
-    "styled-components": "^5.1.0",
-    "homepage": "http://victorren7.github.io/stocktwits-app"
+    "styled-components": "^5.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
